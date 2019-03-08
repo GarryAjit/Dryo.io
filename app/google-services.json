@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "681920051125",
+    "firebase_url": "https://dryo-c91f1.firebaseio.com",
+    "project_id": "dryo-c91f1",
+    "storage_bucket": "dryo-c91f1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681920051125:android:f87c904f65114abb",
+        "android_client_info": {
+          "package_name": "com.example.intel.dryoio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "681920051125-leal6eb1snlg3b5v2evbmkclbnvcrboa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.intel.dryoio",
+            "certificate_hash": "81323e75f17cf4fc4b931fbefb5c80834b7ad88b"
+          }
+        },
+        {
+          "client_id": "681920051125-ki7ccto0t5drmublg1n1fiv5c2k2i7im.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnC4d-OWCvWhWzn6KXLctVSEE_AoGWVck"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "681920051125-ki7ccto0t5drmublg1n1fiv5c2k2i7im.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
