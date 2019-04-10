@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
         btnStudent.setEnabled(false);
         btnLaundryVendor.setEnabled(false);
 
-
-            Toast.makeText(this, "Welcome to Dryo", Toast.LENGTH_SHORT).show();
+        
             btnStudent.setEnabled(true);
             btnLaundryVendor.setEnabled(true);
 
@@ -82,5 +81,15 @@ public class MainActivity extends AppCompatActivity {
             return false;
         } else
             return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
     }
 }

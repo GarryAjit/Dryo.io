@@ -4,27 +4,36 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class StudentRegister extends AppCompatActivity {
+public class StudentUpdate extends AppCompatActivity {
 
-    Button btnRegister;
+    Button btnUpdate;
     EditText etName, etMobileNumber, etBlockNo, etRoomNo, etUsername, etPassword, etRePassword;
     DatabaseReference reff;
     Student student;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_register);
+        setContentView(R.layout.activity_student_update);
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
 
         etName = findViewById(R.id.etName);
         etMobileNumber = findViewById(R.id.etMobileNo);
@@ -33,11 +42,31 @@ public class StudentRegister extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etRePassword = findViewById(R.id.etRePassword);
-        btnRegister = findViewById(R.id.btnRegister);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
-        student = new Student();
+        reff = FirebaseDatabase.getInstance().getReference().child("student").child(username);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        reff.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                student = dataSnapshot.getValue(Student.class);
+                etName.setText(student.getName());
+                etMobileNumber.setText(student.getMobileNo());
+                etBlockNo.setText(String.valueOf(student.getBlockNo()));
+                etRoomNo.setText(String.valueOf(student.getRoomNo()));
+                etUsername.setText(String.valueOf(student.getUsername()));
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(etName.getText().toString().trim().equals(""))
@@ -81,7 +110,7 @@ public class StudentRegister extends AppCompatActivity {
 
                     if(is_connected==false)
                     {
-                        Toast.makeText(StudentRegister.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StudentUpdate.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
 
                     else
@@ -97,9 +126,9 @@ public class StudentRegister extends AppCompatActivity {
                         //reff.push().setValue(student);
                         reff.child(etUsername.getText().toString().trim()).setValue(student);
 
-                        Toast.makeText(StudentRegister.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(StudentUpdate.this, "Update Successful", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(StudentRegister.this, StudentLogin.class);
+                        Intent intent = new Intent(StudentUpdate.this, StudentLogin.class);
                         startActivity(intent);
                         finish();
                     }

@@ -9,35 +9,62 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-public class LaundryRegister extends AppCompatActivity {
+public class laundry_update extends AppCompatActivity {
 
-    Button btnRegister;
+    Button btnUpdate;
     EditText etName, etMobileNumber, etUsername, etPassword, etRePassword;
-    DatabaseReference reff;
+    DatabaseReference reff,reff1;
     LaundryVendor laundryVendor;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laundry_register);
+        setContentView(R.layout.activity_laundry_update);
+
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("username");
 
         etName = findViewById(R.id.etName);
         etMobileNumber = findViewById(R.id.etMobileNo);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         etRePassword = findViewById(R.id.etRePassword);
-        btnRegister = findViewById(R.id.btnRegister);
+        btnUpdate = findViewById(R.id.btnUpdate);
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
 
-        laundryVendor=new LaundryVendor();
+        reff = FirebaseDatabase.getInstance().getReference().child("laundryvendor").child(username);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        reff.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                LaundryVendor laundryVendor = dataSnapshot.getValue(LaundryVendor.class);
+                etName.setText(laundryVendor.getName());
+                etUsername.setText(laundryVendor.getUsername());
+                etMobileNumber.setText(laundryVendor.getPhoneno());
+                progressBar.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(etName.getText().toString().trim().equals(""))
                 {
                     etName.setError("Please enter your name");
@@ -69,11 +96,12 @@ public class LaundryRegister extends AppCompatActivity {
 
                     if(is_connected==false)
                     {
-                        Toast.makeText(LaundryRegister.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(laundry_update.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     }
 
                     else
                     {
+                        laundryVendor = new LaundryVendor();
                         reff = FirebaseDatabase.getInstance().getReference().child("laundryvendor");
                         laundryVendor.setName(etName.getText().toString().trim());
                         laundryVendor.setPhoneno(etMobileNumber.getText().toString().trim());
@@ -84,9 +112,9 @@ public class LaundryRegister extends AppCompatActivity {
                         //reff.push().setValue(laundryVendor);
                         reff.child(etUsername.getText().toString().trim()).setValue(laundryVendor);
 
-                        Toast.makeText(LaundryRegister.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(laundry_update.this, "Registration Successful", Toast.LENGTH_SHORT).show();
 
-                        Intent intent = new Intent(LaundryRegister.this, LaundryLogin.class);
+                        Intent intent = new Intent(laundry_update.this, LaundryLogin.class);
                         startActivity(intent);
                         finish();
 

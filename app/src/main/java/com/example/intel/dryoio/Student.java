@@ -10,6 +10,7 @@ public class Student {
     private int RoomNo;
     private String Username;
     private String Password;
+    private double balance;
 
     public Student() {
 
@@ -63,4 +64,11 @@ public class Student {
         Password = password;
     }
 
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
 }

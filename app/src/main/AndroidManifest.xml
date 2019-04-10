@@ -4,26 +4,41 @@
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/dryo_landing"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".StudentRegister" />
+        <activity android:name=".LaundryRegister" />
+        <activity android:name=".StudentLogin" />
+        <activity android:name=".LaundryLogin" />
+        <activity android:name=".LaundryBillGenerator" />
+        <activity android:name=".Laundry_PendingBills" />
+        <activity android:name=".Laundry_CompleteBills" />
+        <activity android:name=".Lundry_ViewBill">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Student_pending_bills" />
+        <activity android:name=".Student_laundry_view_bill" />
+        <activity android:name=".Student_complete_bills" />
+        <activity android:name=".StudentWallet" />
+        <activity android:name=".LandingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StudentRegister" />
-        <activity android:name=".LaundryRegister" />
-        <activity android:name=".StudentLogin" />
-        <activity android:name=".LaundryLogin" />
-        <activity android:name=".LaundryBillGenerator"></activity>
+        <activity android:name=".laundry_update" />
+        <activity android:name=".StudentUpdate"></activity>
     </application>
 
 </manifest>

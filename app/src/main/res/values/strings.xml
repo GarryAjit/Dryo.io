@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Dryo.io</string>
     <string name="register_now"><u> Dont have an account? Register Now! </u></string>
+    <string name="update"><u> Update Profile</u></string>
     <string name="dialog_message">Welcome to Alert Dialog</string>
-    <string name="dialog_title">Javatpoint Alert Dialog</string>
+    <string name="dialog_title">Dryo Alert Dialog</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="title_activity_laundry__pendingbills">Laundry_Pendingbills</string>
+    <string name="title_activity_laundry__complete_bills">Laundry_CompleteBills</string>
 </resources>
